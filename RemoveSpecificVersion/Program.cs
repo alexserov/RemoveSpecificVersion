@@ -186,7 +186,7 @@ namespace RemoveSpecificVersion {
             return _this;
         }
 
-        static void Write(
+        static void Write(    
             this (AssemblyDefinition assembly, AssemblyNameReference[] references) _this) {
             _this.assembly.Write();
         }
