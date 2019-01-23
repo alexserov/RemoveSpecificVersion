@@ -5,7 +5,7 @@ cecil-based patcher
 
   -f, --filter       (Default: DevExpress.*) Assembly Filter (RegEx)
 
-  -p, --patch
+  -p, --patch        (Default: true)
 
   -k, --key          Public key token
 
@@ -13,7 +13,7 @@ cecil-based patcher
 
   -r, --recursive    (Default: true) Recursive
 
-  -k, --licx         (Default: true) Kill licenses.licx
+  -i, --licx         (Default: true) Kill licenses.licx
 
   -r, --resources    (Default: true) UpdateResourceInformation
 
