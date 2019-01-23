@@ -42,7 +42,8 @@ namespace RemoveSpecificVersion {
                                                    continue;
                                                }
 
-                                               if (resolved.MainModule.FileName.ToUpper().StartsWith(directory)) {
+                                               var mfName= resolved.MainModule.FileName.ToUpper(); 
+                                               if (fileName.StartsWith(directory) || mfName.StartsWith(@".\")) {
                                                    //resolved.Dispose();
                                                    //result.Add(current.MainModule.AssemblyResolver.Resolve(reference,
                                                    //    new ReaderParameters() {ReadWrite = true}));
@@ -135,7 +136,8 @@ namespace RemoveSpecificVersion {
                     reference.PublicKeyToken = token;
                 reference.Culture = null;
                 var newName = reference.FullName;
-                replacements.Add(currentName, newName);
+                if (!Equals(currentName, newName))
+                    replacements.Add(currentName, newName);
             }
 
             if (patchResources && main.HasResources) {
@@ -174,7 +176,7 @@ namespace RemoveSpecificVersion {
 
                     var resourceindex = main.Resources.IndexOf(targetResource);
                     main.Resources.RemoveAt(resourceindex);
-                    main.Resources[resourceindex] = newResource;
+                    main.Resources.Insert(resourceindex, newResource);
                 }
             }
 
@@ -219,7 +221,7 @@ namespace RemoveSpecificVersion {
         [Option('f', "filter", HelpText = "Assembly Filter (RegEx)", Default = "DevExpress.*")]
         public string Filter { get; set; }
 
-        [Option('p', "patch")]
+        [Option('p', "patch", Default = true)]
         public bool Patch { get; set; }
 
         [Option('k', "key", HelpText = "Public key token")]
@@ -230,7 +232,7 @@ namespace RemoveSpecificVersion {
 
         [Option('r', "recursive", HelpText = "Recursive", Default = true)]
         public bool Recursive { get; set; }
-        [Option('k', "licx", HelpText = "Kill licenses.licx", Default = true)]
+        [Option('i', "licx", HelpText = "Kill licenses.licx", Default = true)]
         public bool KillLicx { get; set; }
         [Option('r', "resources", HelpText = "UpdateResourceInformation", Default=true)]
         public bool Resources { get; set; }
