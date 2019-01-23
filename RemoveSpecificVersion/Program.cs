@@ -130,8 +130,11 @@ namespace RemoveSpecificVersion {
             for (var index = 0; index < _this.references.Length; index++) {
                 var reference = _this.references[index];
                 var currentName = reference.FullName;
-                if (version != null)
+                if (version != null) {
+                    var oldVersion = reference.Version;
                     reference.Version = Version.Parse(version);
+                    reference.Name = reference.Name.Replace($"{oldVersion.Major}.{oldVersion.Minor}", $"{reference.Version.Major}.{reference.Version.Minor}");
+                }                    
                 if (token != null)
                     reference.PublicKeyToken = token;
                 reference.Culture = null;
